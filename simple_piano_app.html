@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>簡易ピアノアプリ</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', serif;
+            font-size: 15px;
+            overflow-x: hidden;
+            letter-spacing:0.05em;
+        }
+        #main-wrapper{
+            margin:0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 230px;
+            background-color: aliceblue;
+        }
+        #song-name{
+            height:20px;
+            width:210px;
+            background-color: blueviolet;
+            color: aliceblue;
+            text-align: center;
+            font-size: 12px;
+        }
+        #upper-wrapper{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 40px;
+            width: 210px;
+            margin: 10px;
+            border-radius: 5px;
+            color: aliceblue;
+            background-color: rgb(173, 190, 186);
+            text-align: center;
+            line-height: 20px;
+        }
+        #sign{
+            height: 20px;
+            width: 110px;
+            padding: 5px;
+            border-radius: 10px;
+            color: aliceblue;
+            background-color: rgb(19, 65, 134);
+            text-align: center;
+            line-height: 20px;
+        }
+        #auto-play{
+            height: 20px;
+            width: 55px;
+            padding: 5px;
+            border-radius: 10px;
+            color: aliceblue;
+            background-color: rgb(226, 207, 124);
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        #keyboard{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 100px;
+            width: 210px;
+            background-color: black;
+        }
+        .key-elements{
+            height: 100px;
+            width: 30px;
+            background-color:aliceblue;
+            border: solid 1px  rgb(203, 224, 228);
+            cursor: pointer;
+        }
+        [aria-disabled="true"] {
+            background-color:rgb(215, 222, 228);
+            border: solid 1px aliceblue;
+            cursor: default;
+        }
+        button{
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: navajowhite;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-wrapper">
+        <div id="song-name"></div>
+        <div id="upper-wrapper">
+            <div id="sign"></div>
+            <div id="auto-play">自動演奏</div>
+        </div>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_1do.mp3"></audio>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_2re.mp3"></audio>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_3mi.mp3"></audio>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_4fa.mp3"></audio>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_5so.mp3"></audio>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_6ra.mp3"></audio>
+        <audio preload="auto" class="sound-elements" src="sounds/maou_se_inst_piano2_7si.mp3"></audio>
+
+        <div id="keyboard">
+            <div class="key-elements" id="C">ド</div>
+            <div class="key-elements" id="D">レ</div>
+            <div class="key-elements" id="E">ミ</div>
+            <div class="key-elements" id="F">ファ</div>
+            <div class="key-elements" id="G">ソ</div>
+            <div class="key-elements" id="A">ラ</div>
+            <div class="key-elements" id="B">シ</div>
+        </div>
+    </div>
+
+    <button type="button" onclick="location.href='index.html'">ポートフォリオに戻る</button>
+
+    <script>
+        const AUTO_PLAY_START_NOTE_INDEX = 2;
+        const PLAYABLE_SOUND_MAX_INDEX = 6;
+        const REST_SOUND_INDEX = 10;
+        const AUTO_PLAYABLE_SONG_COUNT = 2
+        const AUTO_PLAYABLE_SONG_START_INDEX = 1
+        const FADE_VOLUME_STEP = 0.1
+        const MIN_AUDIBLE_VOLUME = 0.05
+        const FADE_INTERVAL_MS = 10
+        const MAX_AUDIBLE_VOLUME = 1
+        const STARTING_POINT_OF_AUDIO_FILE=0.1
+        const TEMPO_NOTE_INDEX = 1
+        const SONG_NAME_NOTE_INDEX = 0
+
+        let keyDisplayTimeoutId = null;
+        let autoPlayIntervalId = null;
+        let currentSongIndex = null;
+        let currentNoteIndex = AUTO_PLAY_START_NOTE_INDEX;
+        let currentSoundIndex = 0;
+        let isAutoPlaying = false;
+        let fadeOutIntervalId = null;
+
+        const keyElements = $(".key-elements").get();
+        const soundElements = $(".sound-elements").get();
+
+
+
+        //楽譜の定義
+        const SCORE = [
+            ["test",0.25,"C","C","E","E","F","F","G","G","A","A","B","B","B","X","A","X","G","X","F","X","E","X","D","X","C","X","B","-","A","-","G","-","F","-","E","-","D","-","C","-","Z"],
+            ["きらきら星",0.5,"C","X","C","X","G","X","G","X","A","X","A","X","G","-","-","-","F","X","F","X","E","X","E","X","D","X","D","X","C","-","-","-","G","X","G","X","F","X","F","X","E","X","E","X","D","-","-","-","G","X","G","X","F","X","F","X","E","X","E","X","D","-","-","-","C","X","C","X","G","X","G","X","A","X","A","X","G","-","-","-","F","X","F","X","E","X","E","X","D","X","D","X","C","-","-","-","-","-","-","-","Z"],
+            ["チューリップ",0.25,"C","-","D","-","E","-","-","-","C","-","D","-","E","-","-","-","G","-","E","-","D","-","C","-","D","-","E","-","D","-","-","-","C","-","D","-","E","-","-","-","C","-","D","-","E","-","-","-","G","-","E","-","D","-","C","-","D","-","E","-","C","-","-","-","G","X","G","X","E","X","G","X","A","X","A","X","G","-","-","-","E","X","E","X","D","X","D","X","C","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","Z"]
+        ];
+
+        const NOTE_LABELS = {
+            C: "ド",
+            D: "レ",
+            E: "ミ",
+            F: "ファ",
+            G: "ソ",
+            A: "ラ",
+            B: "シ",
+            X: "" 
+        };
+
+        function handleKeyClick(){
+            clearTimeout(keyDisplayTimeoutId);//連打対策。1000ミリ秒を待たずに終わらせる
+            playNoteByKey($(this).attr("id"));//押されたキーを渡して、キーごとの操作を行う
+            keyDisplayTimeoutId = setTimeout(clearDisplayedNote, 1000);//1000秒後にclearDisplayedNoteを1回だけやる
+        }
+        function playNoteByKey(noteKey){
+            switch(noteKey){
+                case "C":
+                case "D":
+                case "E":
+                case "F":
+                case "G":
+                case "A":
+                case "B":
+                case "X":
+                    $("#sign").text(NOTE_LABELS[noteKey]);
+                    fadeOutAndPlaySound(getSoundIndexFromNoteKey(noteKey));
+                    break;
+                case "-":
+                    break;
+                case "Z":
+                    $("#sign").text("");
+                    fadeOutAndPlaySound(REST_SOUND_INDEX);
+                    stopAutoPlay();
+                    break;
+            }
+
+        }
+        
+        function clearDisplayedNote(){
+            $("#sign").text("");
+        }
+
+        function getSoundIndexFromNoteKey(noteKey) {
+            const soundIndexMap = {
+                C: 0,
+                D: 1,
+                E: 2,
+                F: 3,
+                G: 4,
+                A: 5,
+                B: 6,
+                X: REST_SOUND_INDEX
+            };
+
+            return soundIndexMap[noteKey];
+        }
+
+        function fadeOutAndPlaySound(nextSoundIndex){
+            clearInterval(fadeOutIntervalId);
+            fadeOutIntervalId = setInterval(function(){
+                soundElements[currentSoundIndex].volume -= FADE_VOLUME_STEP;
+                if (soundElements[currentSoundIndex].volume <= MIN_AUDIBLE_VOLUME){
+                    soundElements[currentSoundIndex].pause();
+                    soundElements[currentSoundIndex].volume = MAX_AUDIBLE_VOLUME;
+                    if (nextSoundIndex <= PLAYABLE_SOUND_MAX_INDEX){
+                        currentSoundIndex = nextSoundIndex;
+                        soundElements[nextSoundIndex].currentTime = STARTING_POINT_OF_AUDIO_FILE;
+                        soundElements[nextSoundIndex].play();
+                    }
+                    clearInterval(fadeOutIntervalId);
+                }
+            },FADE_INTERVAL_MS);
+        }
+
+        function toggleAutoPlay() {
+            if (isAutoPlaying === false) {
+                startAutoPlay();
+                return;
+            }
+            stopAutoPlay();
+        }
+
+        function startAutoPlay(){
+            //乱数で1か2を選ぶ（グローバル変数だから渡さなくてOK）
+            currentSongIndex = Math.floor(Math.random() * AUTO_PLAYABLE_SONG_COUNT + AUTO_PLAYABLE_SONG_START_INDEX);
+            //currentNoteIndexを2に
+            currentNoteIndex = AUTO_PLAY_START_NOTE_INDEX;
+            //曲名表示
+            $("#song-name").text("自動演奏中です：" + SCORE[currentSongIndex][SONG_NAME_NOTE_INDEX]);
+            //文字を「演奏中止」に
+            $("#auto-play").text("演奏中止");
+            //キーを止める
+            setkeyElementsDisabled(true);
+            $(".key-elements").off("click",handleKeyClick);
+            //演奏中だということを保存
+            isAutoPlaying = true;
+            //スタート
+            autoPlayIntervalId = setInterval(playNextAutoNote,SCORE[currentSongIndex][TEMPO_NOTE_INDEX]*1000);
+        }
+
+        function setkeyElementsDisabled(isDisabled){
+            keyElements.forEach(function(keyElement){
+                keyElement.ariaDisabled = isDisabled;
+            });
+        }
+        function playNextAutoNote(){
+            // 楽譜の文字に応じて表示・Xは何も出さない・Zが出たら終了
+            playNoteByKey(SCORE[currentSongIndex][currentNoteIndex]);
+            currentNoteIndex++;
+        }
+        function stopAutoPlay(){
+            //clearInterval
+            clearInterval(autoPlayIntervalId);
+            //currentNoteIndexを2に
+            currentNoteIndex = AUTO_PLAY_START_NOTE_INDEX;
+            //曲名表示
+            $("#song-name").text("");
+            //音階表示
+            $("#sign").text("");
+            //ボタンの文字を「自動演奏」に
+            $("#auto-play").text("自動演奏");
+            //キーを動かす
+            $(".key-elements").on("click",handleKeyClick);
+            setkeyElementsDisabled(false);        
+            //演奏中じゃないという状態を保存
+            isAutoPlaying = false;
+        }
+        
+        $(".key-elements").on("click",handleKeyClick);
+        $("#auto-play").click(toggleAutoPlay);
+    </script>
+</body>
+</html>
