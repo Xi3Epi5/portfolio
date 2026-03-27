@@ -6,13 +6,14 @@ body{
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans JP', serif;
+    font-family: 'Noto Sans JP', sans-serif;
     overflow-x: hidden;
     letter-spacing:0.05em;
     background-image: url(images/lily.jpg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
     top: 0;
     left: 0;
 }
