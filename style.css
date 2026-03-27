@@ -154,6 +154,10 @@ a{
         font-size: 22px;
     }
 
+    .color-container{
+        height: auto;
+    } 
+
     .color-container ul{
         font-size: 18px;
     }
