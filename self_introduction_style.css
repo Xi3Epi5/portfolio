@@ -3,7 +3,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans JP', serif;
+    font-family: 'Noto Sans JP', sans-serif;
     overflow-x: hidden; /* 横スクロールを防ぐ */
     letter-spacing:0.05em;
 }
