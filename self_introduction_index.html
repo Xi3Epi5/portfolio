@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="self_introduction_style.css">
+    <title>Taro Shuro's Portfolio</title>
+
+    <script>
+        window.onload = function () {
+            const clickEvent0 = () => {
+                alert("送信しました！");
+            }
+            const clickEvent1 = () => {
+
+                console.log("《課題1》\n名前と年齢を持つ4人分のオブジェクトを定義し、「○さんの年齢は○歳です。20歳まで○年です。（あるいは）20歳を超えています。」と出力");
+                const person=[
+                    [`モーツァルト`,13],
+                    [`シェイクスピア`,18],
+                    [`アインシュタイン`,23],
+                    [`レオナルド・ダ・ヴィンチ`,28]
+                ];
+                for(let i=0;i<4;i++){
+                    if(person[i][1]<20){
+                        console.log(`${person[i][0]}さんの年齢は${person[i][1]}歳です。20歳まで${20-person[i][1]}年です。`);
+                    }else{
+                        console.log(`${person[i][0]}さんの年齢は${person[i][1]}歳です。20歳を超えています。`);
+                    }
+                }
+
+                console.log("《課題2》\n四つの数字 29342、 45342、 23419283、 148458552 の偶数/奇数判定と、7で割ったあまりを出力");
+                const number=[29342,45342,23419283,148458552];
+                let j=0;
+                while(j<4){
+                    if (number[j]%2==1){
+                        console.log(`${number[j]}は奇数です。7で割ったあまりは${number[j]%7}です。`);
+                    }else{
+                        console.log(`${number[j]}は偶数です。7で割ったあまりは${number[j]%7}です。`);
+                    }
+                    j +=1;
+                }
+                alert("出力しました！");
+            };
+           let buttons = document.getElementsByClassName("btn");
+           buttons[0].addEventListener("click", clickEvent0);//送信
+           buttons[1].addEventListener("click", clickEvent1);//実行！
+        };
+        
+    </script>
+
+</head>
+
+<body>
+    <header class="clearfix">
+        <h1><span>T</span>aro Shuro's Portfolio</h1>
+        <ul class="clearfix">
+            <li><a href="#profile">自己紹介</a></li>
+            <li><a href="#sample">実装サンプル</a></li>
+        </ul>
+    </header>
+    <div class="whale"></div>
+    <div id="profile" class="profile-wrapper">
+        <div class="container">
+            <div class="profile-intro">
+                <h2>自己紹介<span>Self Introduction</span></h2>
+                <p>私の名前は<span>就労太郎</span>です。アメリカ合衆国出身で現在はディーキャリアITエキスパートにて、プログラミング学習に取り組んでおります。 <br>どうぞよろしくお願いいたします。</p>
+                <img src="images/img01.jpg" alt="">
+            </div>
+            <div class="profile-about-wrapper">
+                <div class="profile-list">
+                    <h3 class="h3-profile">好きなもの・趣味<span>Favorites</span></h3>
+                    <ul>
+                        <li>スポーツ観戦</li>
+                        <li>読書</li>
+                        <li>アウトドア</li>
+                    </ul>
+                </div> 
+                <div class="profile-list">
+                    <h3 class="h3-profile">Webサイト<span>Web Sites</span></h3>
+                    <ul class="list-pink">
+                        <li><a href="https://dd-career.com/" target="_blank">ディーキャリア</a></li>
+                        <li><a href="https://www.google.com/" target="_blank">Google</a></li>
+                        <li><a href="https://www.yahoo.co.jp/" target="_blank">Yahoo! Japan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sample" class="sample-wrapper">
+        <div class="container">
+            <h2>実装サンプル<span>Sample</span></h2>
+            <h3>画像ギャラリー</h3>
+            <div class="gallery-contents">
+                <div class="gallery-content">
+                    <img src="images/gallery01.jpg" alt="">
+                    <h4>宇宙飛行士と月</h4>
+                    <p>幻想的な色彩の月と雲の前に、宇宙飛行士が立っています。</p>
+                </div>
+                <div class="gallery-content">
+                    <img src="images/gallery02.jpg" alt="">
+                    <h4>朝日と石</h4>
+                    <p>積み重ねられた石を、朝日が照らしています。</p>
+                </div>
+                    <div class="gallery-content">
+                    <img src="images/gallery03.jpg" alt="">
+                    <h4>鏡のような湖</h4>
+                    <p>空と海がどちらかわからなくなるような、鏡のような湖です。</p>
+                </div>
+                <div class="gallery-content">
+                    <img src="images/gallery04.jpg" alt="">
+                    <h4>ハートの風船</h4>
+                    <p>青空をバックに、たくさんの色とりどりのハートの風船が浮いています。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inquiry-wrapper">
+
+        <div class="container">
+            <h3>お問い合わせフォーム</h3>
+            <div class="inquiry-square">
+                <div class="inquiry-line">
+                    <div class="indispensable">必須</div>
+                    <div class="inquiry-title">名前</div>
+                </div>
+                <input type="text">
+            </div>
+            <div class="inquiry-square">
+                <div class="inquiry-line">
+                    <div class="indispensable">必須</div>
+                    <div class="inquiry-title">メールアドレス</div>
+                </div>
+                <input type="email">
+            </div>
+            <div class="inquiry-square">
+                <div class="inquiry-line">
+                    <div class="indispensable">必須</div>
+                    <div class="inquiry-title">年齢</div>
+                </div>
+                <input type="number">
+            </div>
+            <div class="inquiry-square">
+                <div class="inquiry-line">
+                    <div class="indispensable">必須</div>
+                    <div class="inquiry-title">お問い合わせ内容</div>
+                </div>
+                <textarea name="inq1" id="inq1"></textarea>
+            </div>
+            <input class="btn" type="submit">
+            <p>※2026/9/17時点で送信メッセージ以外は未実装</p>
+        </div>
+    </div>
+    <div class="assignment-wrapper">
+        <div class="container">
+            <h3>JavaScript課題</h3>
+            <p>課題内容と答えがコンソールに表示されます。</p>
+            <input class="btn" type="button" value="実行！">
+        </div>
+    </div>
+    <div class="return-wrapper">
+        <div class="container">
+            <h3>ポートフォリオへ戻る</h3>
+            <p>三嶋小百合のポートフォリオへ戻ります。</p>
+            <input class="btn" type="button" value="戻る" onclick="location.href='index.html'">
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>Copyright © 2022 Taro Shuro</p>
+        </div>
+    </footer>
+</body>
+</html>
+

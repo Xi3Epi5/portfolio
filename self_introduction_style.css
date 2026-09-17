@@ -1,0 +1,399 @@
+/*全体設定*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans JP', serif;
+    overflow-x: hidden; /* 横スクロールを防ぐ */
+    letter-spacing:0.05em;
+}
+
+h2{
+    color: #4B52A7;
+    font-size: 24px;
+    text-align: center;
+    margin:0;
+    padding-top:80px;
+}
+
+h2 span{
+    display: block;
+    color: #4B52A7;
+    font-size: 14px;
+    text-align: center;
+    margin-top:4px;
+    margin-bottom: 0px;
+}
+
+.container{
+    margin: 0 auto;
+    width: 1024px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.clearfix::after {
+   content: "";
+   display: block;
+   clear: both;
+}
+
+h3{
+    color: #32839C;
+    border-bottom: 1px solid #B7B7B7; 
+    margin-top: 80px;
+    margin-bottom: 40px;
+    padding-bottom: 3px;
+    font-size: 16px;
+}
+
+.btn{
+    color: #FFFFFF;
+    background-color: #8AB3DC;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    box-shadow: 0px 4px 0px #818694;
+    border: none;
+    font-size: 16px;
+}
+
+.btn:active{
+    background-color:#6885a1;
+    box-shadow:none;
+    transform: translateY(4px);
+}
+
+/*ヘッダー*/
+header{
+    margin:0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: rgba(0,0,0,0.8);  
+    padding-left: 20px;
+    height: 80px;
+    position: fixed;
+}
+
+header h1{
+    float: left;
+    margin: 0px;
+    font-size: 26px;
+    color: #FFFFFF;
+    line-height: 80px;
+}
+
+header span{
+    color: #A6ACFF;
+}
+
+header ul{
+    float:right;
+    list-style: none;
+    height: 80px;
+    margin:0px;
+}
+
+header li{
+    float:left;
+    line-height: 80px;
+    margin:0px 20px;
+    font-size:16px;
+}
+
+header a{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.whale{
+    width: 100%;
+    background-image: url(images/main.jpg);
+    height:40vh;
+    background-size: cover;
+    background-position: center;
+}
+
+
+/*自己紹介*/
+
+.profile-intro{
+    padding: 0;
+}
+
+.profile-intro p{
+    display: inline-block;
+    text-align: left;
+    margin-top: 40px;
+    margin-bottom: 0px;
+    width: 600px;
+    line-height:32px;
+    font-size: 16px;
+}
+
+.profile-intro span{
+    font-weight: bold;
+}
+
+.profile-intro img{
+    margin-top: 30px;
+    margin-bottom:40px;
+    vertical-align:top;
+    width: 600px;
+}
+
+.profile-about-wrapper{
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-list{
+    width: 48%;
+    background-color: #8AB3DC;
+    border-radius: 10px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+}
+
+.profile-list ul{
+    margin: 20px auto;
+}
+
+.profile-list li{
+    text-align: left;
+    font-size: 16px;
+    line-height: 30px;
+    color: #FEFFC7;
+}
+
+.profile-list a{
+    color: #FFE8F6;
+    text-decoration: none;
+}
+
+.h3-profile{
+    color: #FFFFFF;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom:0;
+    padding-bottom: 0;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.h3-profile span{
+    display: block;
+    font-size: 12px;
+    margin: 0;
+    padding: 3px 10px 10px 10px;
+}
+
+.list-pink li{
+    color: #FFE8F6;
+}
+
+
+/*実装サンプル*/
+
+.gallery-contents{
+    display:flex;
+}
+
+.gallery-content{
+    width: 25%;
+}
+
+.gallery-content img{
+    width: 90%;
+    display:block;
+    margin: 0 auto;
+}
+
+.gallery-content h4{
+    width: 90%;
+    height: 30px;
+    line-height: 30px;
+    color: #FFFFFF;
+    background-color: #758BAF;
+    margin: auto;
+    margin-top: 0px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.gallery-content p{
+    width: 90%;
+    margin: auto;
+    text-align: left;
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+
+/*お問い合わせフォーム*/
+
+.inquiry-square{
+    width: 600px;
+    margin: 0 auto;
+}
+
+.inquiry-square input,.inquiry-square textarea{
+    width: 600px;
+    height: 40px;
+    border: 1px solid #B7B7B7;
+    border-radius: 10px;
+    box-sizing:border-box;
+}
+
+.inquiry-square input{
+    margin-bottom: 20px;
+}
+
+.inquiry-square textarea{
+    margin-bottom: 40px;
+    vertical-align:top;
+}
+
+.inquiry-line{
+    width: 600px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto 10px auto;
+}
+
+.indispensable{
+    font-size: 12px;
+    color: #FFFFFF;
+    background-color: #32839C;
+    border-radius: 4px;
+    line-height: 24px;
+    margin: 0 10px 0 0 ;
+    padding:0 8px;
+}
+
+.inquiry-title{
+    line-height: 24px;
+    text-align:left;
+    font-size: 16px;
+    margin:0;
+}
+
+.inquiry-wrapper p{
+    font-size: 14px;
+    color: gray;
+}
+ 
+/* JavaScript課題*/
+.assignment-wrapper p{
+    font-size: 14px;
+}
+/* 戻るボタン*/
+.return-wrapper p{
+    font-size: 14px;
+}
+
+/*フッター*/
+footer{
+    margin-top: 80px;
+    height: 120px;
+    background-color: #8AB3DC;
+}
+footer p{
+    padding-top: 20px;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+
+/*スマホ用*/
+
+@media (max-width: 768px) {
+
+    header{
+        height: 48px;
+    }
+
+    header h1{
+        font-size: 20px;
+        line-height: 48px;
+    }
+
+    header ul{
+        display:none;
+    }
+
+    .whale{
+        background-image: url(images/main_sp.jpg);
+        height:100vh;
+        background-position:center;
+    }
+
+    h2{
+        font-size: 20px;
+    }
+
+    .profile-intro img{
+        width: 100%;
+        margin-top: 25px;
+        margin-bottom: 40px;
+    }
+
+    .profile-intro p{
+        width: 100%;
+        font-size: 14px;
+    }
+
+/*自己紹介を縦並びに*/
+
+    .profile-about-wrapper{
+        flex-direction: column;
+        width: 100%;
+        gap:10px;
+    }
+
+    .profile-list{
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+/*画像を縦並びに*/
+
+    .gallery-contents{
+        flex-direction: column;
+        width:100%;
+        gap:20px;
+    }
+
+    .gallery-content{
+        margin: 0 auto;
+        width:100%;
+    }
+
+    .gallery-content img,.gallery-content h4{
+        width: 80%;
+    }
+
+    .gallery-content p{
+        width:80%;
+    }
+
+
+/*お問い合わせ*/
+
+    .inquiry-square{
+        width: 100%;
+    }
+
+    .inquiry-line{
+        width: 100%;
+    }
+
+    .inquiry-square input, .inquiry-square textarea{
+        width: 100%;
+    }
+
+
+}
